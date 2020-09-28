@@ -15,7 +15,7 @@ set smartindent
 set tabstop=4        " tab width is 4 spaces
 set shiftwidth=4     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
-" wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
+" wrap lines at 110 chars. 80 is somewaht antiquated with nowadays displays.
 set textwidth=110
 set colorcolumn=110
 highlight ColorColumn ctermbg=darkgray
