@@ -67,7 +67,7 @@ Plugin 'derekwyatt/vim-protodef'
 Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
 " linting 
 Plugin 'dense-analysis/ale' 
-" AsyncRun 
+" AsyncRun for running/compiling in Vim via keybindings 
 Plugin  'skywind3000/asyncrun.vim'
 
 " --- VIEW --- 
@@ -94,10 +94,10 @@ let g:ycm_clangd_binary_path = exepath("clangd")
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 
-" vim-format stuff 
+" setup auto-formatting for code 
 augroup autoformat_settings
     autocmd FileType bzl AutoFormatBuffer buildifier
-    autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+    autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
     autocmd FileType dart AutoFormatBuffer dartfmt
     autocmd FileType go AutoFormatBuffer gofmt
     autocmd FileType gn AutoFormatBuffer gn
@@ -105,6 +105,7 @@ augroup autoformat_settings
     autocmd FileType java AutoFormatBuffer google-java-format
     autocmd FileType python AutoFormatBuffer yapf
     " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+    autocmd FileType rust AutoFormatBuffer rustfmt
     autocmd FileType vue AutoFormatBuffer prettier
 augroup END
 
@@ -125,9 +126,9 @@ vnoremap <silent><C-s> <Esc>:update<cr>gv
 inoremap <silent><C-s> <C-o>:update<cr>
 
 "using Aysncrun 
-let g:asyncrun_open = 6
+let g:asyncrun_open = 20 
 " F12 to toggle quickfix window
-nnoremap <F12> :call asyncrun#quickfix_toggle(6)<cr>
+nnoremap <F12> :call asyncrun#quickfix_toggle(20)<cr>
 " set root 
 let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs'] 
 " compile a single file 
