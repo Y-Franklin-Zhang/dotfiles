@@ -125,5 +125,8 @@ if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
 fi
 
 # add local install to path
-export PATH=$PATH:/home/franklin/.local/bin
+export PATH=$PATH:/home/$(whoami)/.local/bin
+
+# enable c-s and c-q to be re-mapped 
+stty -ixon
 

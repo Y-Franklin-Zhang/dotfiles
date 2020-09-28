@@ -90,6 +90,9 @@ let g:ycm_filetype_blacklist = {}
 let g:ycm_clangd_uses_ycmd_caching = 0
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
 let g:ycm_clangd_binary_path = exepath("clangd")
+" close preview window automatically 
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 " vim-format stuff 
 augroup autoformat_settings
@@ -114,17 +117,24 @@ colorscheme spacemacs-theme
 
 " keybindings 
 let mapleader = ';'
-" run make 
-noremap <F5> :w<CR> :silent !clear; make<CR> :!echo "--------------- Running ---------------"; echo; command time -v "./%<"<CR>
+" compile and run a single file within this directory 
+noremap <C-F5> :w<CR> :silent !clear; make<CR> :!echo "--------------- Running ---------------"; echo; command time -v "./%<"<CR>
+" save the current file 
+nnoremap <silent><C-s> :<C-u>update<cr>
+vnoremap <silent><C-s> <Esc>:update<cr>gv
+inoremap <silent><C-s> <C-o>:update<cr>
 
 "using Aysncrun 
 let g:asyncrun_open = 6
 " F12 to toggle quickfix window
 nnoremap <F12> :call asyncrun#quickfix_toggle(6)<cr>
+" set root 
+let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs'] 
 " compile a single file 
-noremap <silent> <F9> :AsyncRun make<cr>
+noremap <silent> <F9> :AsyncRun -cwd=<root> make <cr>
 " run a single file 
-noremap <silent> <F10> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+noremap <silent> <F10> :AsyncRun -cwd=<root> -raw "<root>/bin/$(VIM_FILENOEXT)" <cr>
+"noremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 " enable powerline 
 python3 from powerline.vim import setup as powerline_setup
