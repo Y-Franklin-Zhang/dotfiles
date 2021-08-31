@@ -4,5 +4,5 @@
 !.gitignore 
 !.vimrc 
 !.bashrc
-!.tmux.config
+!.tmux.conf
 !.clang-format

@@ -68,13 +68,15 @@ Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
 " linting 
 Plugin 'dense-analysis/ale' 
 " AsyncRun for running/compiling in Vim via keybindings 
-Plugin  'skywind3000/asyncrun.vim'
+" Plugin  'skywind3000/asyncrun.vim'
+" Git integrated with Vim 
+Plugin 'tpope/vim-fugitive'
 
 " --- VIEW --- 
 " show indent lines 
 Plugin 'Yggdroot/indentLine'
 " show changed line signs for git diff files 
-"Plugin 'airblade/vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 
 
 " All of your Plugins must be added before the following line
@@ -116,26 +118,12 @@ if (has("termguicolors"))
 set background=dark
 colorscheme spacemacs-theme
 
-" keybindings 
-let mapleader = ';'
 " compile and run a single file within this directory 
 noremap <C-F5> :w<CR> :silent !clear; make<CR> :!echo "--------------- Running ---------------"; echo; command time -v "./%<"<CR>
 " save the current file 
 nnoremap <silent><C-s> :<C-u>update<cr>
 vnoremap <silent><C-s> <Esc>:update<cr>gv
 inoremap <silent><C-s> <C-o>:update<cr>
-
-"using Aysncrun 
-let g:asyncrun_open = 20 
-" F12 to toggle quickfix window
-nnoremap <F12> :call asyncrun#quickfix_toggle(20)<cr>
-" set root 
-let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs'] 
-" compile a single file 
-noremap <silent> <F9> :AsyncRun -cwd=<root> make <cr>
-" run a single file 
-noremap <silent> <F10> :AsyncRun -cwd=<root> -raw "<root>/bin/$(VIM_FILENOEXT)" <cr>
-"noremap <silent> <F5> :AsyncRun -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
 
 " enable powerline 
 python3 from powerline.vim import setup as powerline_setup
