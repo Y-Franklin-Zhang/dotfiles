@@ -75,12 +75,21 @@ Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
 Plugin 'dense-analysis/ale' 
 " Git integrated with Vim 
 Plugin 'tpope/vim-fugitive'
+" faster ag/ack
+Plugin 'mileszs/ack.vim'
+" editing prose
+Plugin 'junegunn/goyo.vim'
+Plugin 'amix/vim-zenroom2'
+" track history of yanked text
+Plugin 'maxbrunsfeld/vim-yankstack'
 
 " --- VIEW --- 
 " show indent lines 
 Plugin 'Yggdroot/indentLine'
 " show changed line signs for git diff files 
 Plugin 'airblade/vim-gitgutter'
+" file system explorer
+Plugin 'preservim/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,6 +110,43 @@ let g:ycm_clangd_binary_path = exepath("clangd")
 " Close preview window automatically 
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
+
+
+""""""""""""""""""""""""""""""
+" => YankStack
+""""""""""""""""""""""""""""""
+let g:yankstack_yank_keys = ['y', 'd']
+
+nmap <C-p> <Plug>yankstack_substitute_older_paste
+nmap <C-n> <Plug>yankstack_substitute_newer_paste
+
+
+""""""""""""""""""""""""""""""
+" => ZenCoding
+""""""""""""""""""""""""""""""
+" Enable all functions in all modes
+let g:user_zen_mode='a'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Nerd Tree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:NERDTreeWinPos = "right"
+let NERDTreeShowHidden=0
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let g:NERDTreeWinSize=35
+map <leader>nn :NERDTreeToggle<cr>
+map <leader>nb :NERDTreeFromBookmark<Space>
+map <leader>nf :NERDTreeFind<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vimroom
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:goyo_width=100
+let g:goyo_margin_top = 2
+let g:goyo_margin_bottom = 2
+nnoremap <silent> <leader>z :Goyo<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
