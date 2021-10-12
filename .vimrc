@@ -85,11 +85,13 @@ Plugin 'maxbrunsfeld/vim-yankstack'
 
 " --- VIEW --- 
 " show indent lines 
-Plugin 'Yggdroot/indentLine'
+Plugin 'nathanaelkane/vim-indent-guides'
 " show changed line signs for git diff files 
 Plugin 'airblade/vim-gitgutter'
 " file system explorer
 Plugin 'preservim/nerdtree'
+" powerline default
+Plugin 'itchyny/lightline.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -110,6 +112,31 @@ let g:ycm_clangd_binary_path = exepath("clangd")
 " Close preview window automatically 
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => lightline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'],
+      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \   'right': [ [ 'lineinfo' ], ['percent'] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*FugitiveHead")?FugitiveHead():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*FugitiveHead") && ""!=FugitiveHead())'
+      \ },
+      \ 'separator': { 'left': ' ', 'right': ' ' },
+      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ }
 
 
 """"""""""""""""""""""""""""""
@@ -183,7 +210,6 @@ try
 catch
 endtry
 hi Comment guifg=#5C6370 ctermfg=59
-hi Comment cterm=italic
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -381,13 +407,13 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 "" => Status line
 """""""""""""""""""""""""""""""
 " Format the status line
-try 
-    python3 from powerline.vim import setup as powerline_setup
-    python3 powerline_setup()
-    python3 del powerline_setup
-catch 
-    set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-endtry
+"try 
+    "python3 from powerline.vim import setup as powerline_setup
+    "python3 powerline_setup()
+    "python3 del powerline_setup
+"catch 
+    "set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+"endtry
 " Always show the status line
 set laststatus=2
 
