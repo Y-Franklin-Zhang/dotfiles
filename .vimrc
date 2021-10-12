@@ -115,6 +115,13 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-indent-guide
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:indent_guides_enable_on_vim_startup = 1
+"set ts=2 sw=2 et
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
@@ -150,7 +157,7 @@ nmap <C-n> <Plug>yankstack_substitute_newer_paste
 
 """"""""""""""""""""""""""""""
 " => ZenCoding
-""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""
 " Enable all functions in all modes
 let g:user_zen_mode='a'
 
@@ -206,7 +213,7 @@ endif
 set background=dark
 try 
     color space-vim-dark
-    let g:space_vim_dark_background = 233
+    let g:space_vim_dark_background = 234
 catch
 endtry
 hi Comment guifg=#5C6370 ctermfg=59
@@ -412,7 +419,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
     "python3 powerline_setup()
     "python3 del powerline_setup
 "catch 
-    "set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 "endtry
 " Always show the status line
 set laststatus=2
