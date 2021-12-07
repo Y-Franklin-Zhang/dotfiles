@@ -46,6 +46,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 " --- COLORS --- 
 Plugin 'liuchengxu/space-vim-dark'
+Plugin 'colepeters/spacemacs-theme.vim'
 Plugin 'arzg/vim-colors-xcode'
 " syntax language packs 
 Plugin 'sheerun/vim-polyglot'
@@ -70,7 +71,11 @@ Plugin 'preservim/nerdcommenter'
 " pull C++ prototypes into the implementation file 
 Plugin 'derekwyatt/vim-protodef'
 " instantly open a preview window when editing markdown files 
-Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
+"Plugin 'instant-markdown/vim-instant-markdown'
+Plugin 'iamcco/markdown-preview.nvim'
+" markdown editing
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 " linting 
 Plugin 'dense-analysis/ale' 
 " Git integrated with Vim 
@@ -80,6 +85,7 @@ Plugin 'mileszs/ack.vim'
 " editing prose
 Plugin 'junegunn/goyo.vim'
 Plugin 'amix/vim-zenroom2'
+Plugin 'reedes/vim-pencil'
 " track history of yanked text
 Plugin 'maxbrunsfeld/vim-yankstack'
 
@@ -96,6 +102,7 @@ Plugin 'itchyny/lightline.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 call glaive#Install()        " required for vim-format 
+call mkdp#util#install()     " required for markdown-preview
 filetype plugin indent on    " required 
 " ===================== VUNDLE END ======================================
 
@@ -109,9 +116,6 @@ let g:ycm_clangd_uses_ycmd_caching = 0
 " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
 let g:ycm_clangd_binary_path = exepath("clangd")
 
-" Close preview window automatically 
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -119,6 +123,21 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let g:indent_guides_enable_on_vim_startup = 1
 "set ts=2 sw=2 et
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-instant-markdown
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 1
+" Close preview window automatically 
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_autoclose_preview_window_after_completion = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => markdown-preview
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:mkdp_browser='wsl-open'
+let g:mkdp_auto_start = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -186,9 +205,6 @@ nnoremap <silent> <leader>z :Goyo<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Toggle markdown preview
-nmap <C-p> <Plug>MarkdownPreviewToggle
-
 " Disable markdown folding
 let g:vim_markdown_folding_disabled = 1 
 
@@ -210,10 +226,11 @@ if (has("termguicolors"))
     set termguicolors
     hi LineNr ctermbg=NONE guibg=NONE
 endif
-set background=dark
 try 
-    color space-vim-dark
-    let g:space_vim_dark_background = 234
+    "colorscheme space-vim-dark
+    "let g:space_vim_dark_background = 234
+    set background=dark
+    colorscheme spacemacs-theme
 catch
 endtry
 hi Comment guifg=#5C6370 ctermfg=59
@@ -664,4 +681,33 @@ endfunc
 func! CurrentFileDir(cmd)
     return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
+
+let w:ProseModeOn = 0
+
+function EnableProseMode()
+    setlocal spell spelllang=en_us
+    Goyo 66
+    SoftPencil
+    echo "Prose Mode On"
+endfu
+
+function DisableProseMode()
+    Goyo!
+    NoPencil
+    setlocal nospell
+    echo "Prose Mode Off"
+endfu
+
+function ToggleProseMode()
+    if w:ProseModeOn == 0
+        call EnableProseMode()
+        let w:ProseModeOn = 1
+    else
+        call DisableProseMode()
+    endif
+endfu
+
+command Prose call EnableProseMode()
+command UnProse call DisableProseMode()
+command ToggleProse call ToggleProseMode()
 
